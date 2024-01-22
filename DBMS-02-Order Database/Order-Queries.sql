@@ -12,10 +12,13 @@ WHERE CITY='BANGALORE');
 --Find the name and numbers of all salesman who had more than one customer
 
 SELECT SALESMAN_ID, NAME
-FROM SALESMAN S
-WHERE (SELECT COUNT(*)
-FROM CUSTOMER C
-WHERE C.SALESMAN_ID=S.SALESMAN_ID) > 1;
+FROM SALESMAN
+WHERE SALESMAN_ID IN (
+    SELECT SALESMAN_ID
+    FROM CUSTOMER
+    GROUP BY SALESMAN_ID
+    HAVING COUNT(*) > 1
+);
 
 ----------------------------------
 
